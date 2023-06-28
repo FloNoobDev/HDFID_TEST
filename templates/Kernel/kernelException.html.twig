@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+<main class='container row-cols-1 justify-content-center'>
+    <h2>Message d'erreur</h2>
+    <p>%s</p>
+
+    <h3>Code d'erreur</h3>
+    <p>". $exception->getStatusCode()."</p>
+</main>
+{% endblock %}

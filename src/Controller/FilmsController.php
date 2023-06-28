@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Console\Helper\ProgressBar;
 
 
 class FilmsController extends AbstractController
@@ -19,14 +20,14 @@ class FilmsController extends AbstractController
 
     public function GetResultsByName(string $seek, string $language)  {
 
-        $urlToSeek = 'https://api.themoviedb.org/3/search/movie?query=' . $seek .'&include_adult=false&language=' . $language;
+        $urlToSeek = $this->getParameter('tmdbMainUrl'). '/movie?query=' . $seek .'&include_adult=false&language=' . $language;
 
         $response = $this->client->request(
             'GET',
             $urlToSeek,
             [
                 'headers' => [
-                    'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM2RiMmZhMmZiMWNiM2YwYTFmNDJlN2NjNTQ4YmU4MCIsInN1YiI6IjVjY2JlZjI1OTI1MTQxMDQ1ZDI2YzkyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Up9sJcfYAEahEK-NH8fyPbNr9q801QQrQI29qS27r2o',
+                    'Authorization' => $this->getParameter('tmdbAccessKey'),
                     'accept' => 'application/json',
                 ],
             ]
@@ -40,8 +41,7 @@ class FilmsController extends AbstractController
     #[Route('/films', name: 'films')]
     public function index(): Response
     {
-
-        dd($this->GetResultsByName('jumanji','en-US'));
+        // dd($this->GetResultsByName('jumanji','en-US'));
 
         return $this->render('films/index.html.twig', [
             'movies' =>$this->GetResultsByName('jumanji','en-US'),

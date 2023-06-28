@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    tmdbMainUrl: 'https://api.themoviedb.org/3/search'
+    tmdbAccessKey: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM2RiMmZhMmZiMWNiM2YwYTFmNDJlN2NjNTQ4YmU4MCIsInN1YiI6IjVjY2JlZjI1OTI1MTQxMDQ1ZDI2YzkyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Up9sJcfYAEahEK-NH8fyPbNr9q801QQrQI29qS27r2o'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +24,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\NavigationExceptionListener:
+        tags: [kernel.event_listener]

@@ -2,21 +2,46 @@
 
 {% block title %}Movies{% endblock %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/loadingAnimation.css') }}">
+{% endblock %}
+
 {% block body %}
 
-<main class="container">
-    
-    <div class="row">
-        <div class="col-12">
-            <h3 class="text-center">Les films</h3>
-        </div>
-    </div>
+<main>
 
-    <div class="row">
-        <div class="col-1 col-md-3">
-            
+    <div id="loader"></div>
+
+    <div class="container" id="mainDiv">
+
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-center">Les films</h3>
+            </div>
         </div>
-    </div>
+
+        <div class="row">
+            <div class="cols-1 cols-md-3">
+
+                {% if movies.results|length > 0 %}
+                    {% for movie in movies.results %}
+                        <div class="card col">
+                            <div class="card-header">
+                                {{movie.title|upper}}
+                            </div>
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                <p>Aucun résultat</p>
+                {% endif %}
+            </div>
+        </div>
 </main>
 
+{% endblock %}
+
+{% block javascripts %}
+<script src="{{asset('/js/loadingAnimation.js')}}"></script>
 {% endblock %}
