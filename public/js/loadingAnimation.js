@@ -1,12 +1,12 @@
 
-let myVar;
+let objectTimer;
 
 document.getElementById('mainDiv').style.display = "none";
 
 triggerAnimation();
 
 function triggerAnimation() {
-    myVar = setTimeout(showPage, 2000);
+    objectTimer = setTimeout(showPage, 2000);
 }
 
 function showPage() {

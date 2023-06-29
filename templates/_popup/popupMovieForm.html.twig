@@ -1,0 +1,24 @@
+<div class="modal modal-dialog" id="popupMoviesForm" tabindex="-1" aria-labelledby="popupMoviesForm" aria-hidden="true">
+
+    {{form_start(moviesForm)}}
+
+    <div class="modal-dialog">
+        <div class="modal-content bg-secondary text-light">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupMoviesForm">Nouvelle recherche</h1>
+            </div>
+            <div class="modal-body">
+                {{ form_row(moviesForm.title,{'label':'Titre original du film'}) }}
+                {{ form_row(moviesForm.language,{'label':'Langue du titre'}) }}
+                {{ form_row(moviesForm.forAdult,{'label':'Interdit au mineur'}) }}
+            </div>
+            <div class="modal-footer">
+                {{ form_row(moviesForm.submit,{'label':'Rechercher'}) }}
+                {{ form_row(moviesForm.cancel,{'label':'Annuler'}) }}
+            </div> 
+        </div>
+    </div>
+
+    {{form_end(moviesForm)}}
+
+</div>

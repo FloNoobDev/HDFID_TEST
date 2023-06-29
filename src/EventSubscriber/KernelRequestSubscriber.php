@@ -11,13 +11,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class KernelRequestSubscriber implements EventSubscriberInterface
 {
     public function onKernelRequest(RequestEvent $event): void
-    {
-        if ($event->isMainRequest()) {
-            if ($event->hasResponse()) {
-            } else {
-            }
-        }
-        // ...
+    { 
+        // dd($event->getResponse());
+        // // $event->getKernel()
+        // if($event->getKernel()){
+
+        //     $response = $event->getResponse();
+        //     $jsonRaw = json_decode($response->getContent(),true);
+        //     // $response->setContent($jsonRaw);
+        //     dd($response);
+        // }
+
     }
 
     public static function getSubscribedEvents(): array

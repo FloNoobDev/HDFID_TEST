@@ -2,13 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Movies;
+use App\Form\MoviesType;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 
 class FilmsController extends AbstractController
@@ -18,9 +17,23 @@ class FilmsController extends AbstractController
     ) {
     }
 
-    public function GetResultsByName(string $seek, string $language)  {
+    public function GetPopularMovies()
+    {
+        $response = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', [
+            'headers' => [
+                'Authorization' => $this->getParameter('tmdbAccessKey'),
+                'accept' => 'application/json',
+            ],
+        ]);
 
-        $urlToSeek = $this->getParameter('tmdbMainUrl'). '/movie?query=' . $seek .'&include_adult=false&language=' . $language;
+        $jsonRaw = json_decode($response->getContent(), true);
+
+        return $jsonRaw;
+    }
+    public function GetResultsByName(string $seek, string $language)
+    {
+
+        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie?query=' . $seek . '&include_adult=false&language=' . $language;
 
         $response = $this->client->request(
             'GET',
@@ -31,20 +44,34 @@ class FilmsController extends AbstractController
                     'accept' => 'application/json',
                 ],
             ]
-        );  
-        
-        $jsonRaw = json_decode($response->getContent(),true);
+        );
+
+        $jsonRaw = json_decode($response->getContent(), true);
 
         return $jsonRaw;
     }
 
     #[Route('/films', name: 'films')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        // dd($this->GetResultsByName('jumanji','en-US'));
+        $moviesForm = $this->createForm(MoviesType::class);
+        $movies = $this->GetPopularMovies();
+
+        $moviesForm->handleRequest($request);
+
+        if ($moviesForm->isSubmitted() && $moviesForm->isValid()) {
+            $formData = $moviesForm->getData();
+
+            if($formData['honeypot']){
+                $this->redirectToRoute('index');
+            }
+
+            $movies = $this->GetResultsByName($formData['title'], $formData['language']);
+        }
 
         return $this->render('films/index.html.twig', [
-            'movies' =>$this->GetResultsByName('jumanji','en-US'),
+            'moviesForm' => $moviesForm->createView(),
+            'movies' => $movies,
         ]);
     }
 }
