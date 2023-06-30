@@ -3,22 +3,44 @@
     {{form_start(moviesForm)}}
 
     <div class="modal-dialog">
-        <div class="modal-content bg-secondary text-light">
+        <div class="modal-content bg-light text-dark">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="popupMoviesForm">Nouvelle recherche</h1>
             </div>
             <div class="modal-body">
                 {{ form_row(moviesForm.title,{'label':'Titre original du film'}) }}
                 {{ form_row(moviesForm.language,{'label':'Langue du titre'}) }}
-                {{ form_row(moviesForm.forAdult,{'label':'Interdit au mineur'}) }}
+                {{ form_row(moviesForm.forAdult,{'label':'Interdit au mineur', 'label_attr':{'class':'fst-italic
+                fw-bolder text-danger'}}) }}
             </div>
             <div class="modal-footer">
-                {{ form_row(moviesForm.submit,{'label':'Rechercher'}) }}
-                {{ form_row(moviesForm.cancel,{'label':'Annuler'}) }}
-            </div> 
+                {{ form_row(moviesForm.submit,{'label':'Rechercher', 'attr':{'class':'btn-primary'}}) }}
+                {{ form_row(moviesForm.cancel,{'label':'Annuler', 'attr':{'class':'btn-outline-dark'}}) }}
+            </div>
         </div>
     </div>
 
     {{form_end(moviesForm)}}
 
 </div>
+
+
+{% block javascripts %}
+<script>
+    let allInputFields = document.querySelectorAll('input');
+    let dropdownMenu = document.getElementById('movies_language');
+
+    if (allInputFields) {
+        allInputFields.forEach((vInput) => {
+            vInput.classList.add("bg-dark");
+            vInput.classList.add("text-light");
+        })
+    }
+
+    if (dropdownMenu) {
+        dropdownMenu.classList.add("bg-dark");
+        dropdownMenu.classList.add("text-light");
+    }
+
+</script>
+{% endblock %}

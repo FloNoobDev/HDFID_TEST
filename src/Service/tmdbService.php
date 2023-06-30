@@ -9,6 +9,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class tmdbService
 {
+  
  function getGenres(){     
      $client = new \GuzzleHttp\Client();
      
