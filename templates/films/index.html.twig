@@ -12,10 +12,11 @@
 
     <div id="loader"></div>
 
-    <div class="container" id="mainDiv">
+    <div class="container d-none" id="mainDiv">
 
 
         {% include "_popup/popupMovieForm.html.twig" %}
+        {% include "_popup/popupMovie.html.twig" %}
 
         <section>
 
@@ -27,25 +28,29 @@
 
             <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
                 {% if movies.results|length > 0 %}
-                    {% for movie in movies.results %}                        
-                    <div class="col-6 col-lg-4 border border-dark rounded m-1 h-50">
+                {% for movie in movies.results %}
+                
+                    <a class="col-6 col-lg-4 border border-dark rounded m-1 h-50" data-bs-toggle="modal" data-bs-target="#popupMovieDetailed" data-bs-title="{{movie.title}}"
+                        data-bs-image={{movie.poster_path}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}" data-bs-overview="{{movie.overview}}" > 
+
                         <div class="p-1 text-center border-bottom border-secondary rounded">
                             <h5>{{movie.title|capitalize}}</h5>
                         </div>
+
                         <div class="p-1 text-center">
                             {% if movie.poster_path != "" %}
                             <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ movie.poster_path}}
-                            alt="{{'Image de ' ~ movie.title}}">
+                                alt="{{'Image de ' ~ movie.title}}">
                             {% else %}
                             <p class="position-relative">{{movie.overview|capitalize|u.truncate(70,'...',false)}}<img
-                                class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
-                                alt="placeholderWhite.jpg"><i
-                                class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+                                    class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
+                                    alt="placeholderWhite.jpg"><i
+                                    class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
                             </p>
                             {% endif %}
                         </div>
-                    </div>
-                    {% endfor %}
+                    </a>
+                {% endfor %}
                 {% else %}
                 <p class="text-center fst-italic">Aucun résultat à afficher</p>
                 {% endif %}

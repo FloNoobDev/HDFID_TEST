@@ -28,7 +28,7 @@ class MoviesType extends AbstractType
                 'required' => true,
                 'choices' => [
                     'English US' => 'en-US',
-                    'French' => 'fr-FR',
+                    'Français' => 'fr-FR',
                 ],
                 'data' => 'en-US'
             ])

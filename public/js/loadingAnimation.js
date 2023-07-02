@@ -1,8 +1,6 @@
 
 let objectTimer;
 
-document.getElementById('mainDiv').style.display = "none";
-
 triggerAnimation();
 
 function triggerAnimation() {
@@ -10,6 +8,6 @@ function triggerAnimation() {
 }
 
 function showPage() {
-    document.getElementById("loader").style.display = "none";
-    document.getElementById('mainDiv').style.display = "block";
+    document.getElementById("loader").classList.toggle('d-none');
+    document.getElementById("mainDiv").classList.toggle('d-none');
 }

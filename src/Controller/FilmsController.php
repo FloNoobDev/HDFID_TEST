@@ -19,7 +19,9 @@ class FilmsController extends AbstractController
 
     public function GetPopularMovies()
     {
-        $response = $this->client->request('GET', 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', [
+        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/popular?language=en-US&page=1';
+
+        $response = $this->client->request('GET', $urlToSeek, [
             'headers' => [
                 'Authorization' => $this->getParameter('tmdbAccessKey'),
                 'accept' => 'application/json',
@@ -33,7 +35,7 @@ class FilmsController extends AbstractController
     public function GetResultsByName(string $seek, string $language)
     {
 
-        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie?query=' . $seek . '&include_adult=false&language=' . $language;
+        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/search/movie?query=' . $seek . '&include_adult=false&language=' . $language;
 
         $response = $this->client->request(
             'GET',

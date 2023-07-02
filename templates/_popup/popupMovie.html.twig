@@ -1,0 +1,53 @@
+<div class="modal fade" id="popupMovieDetailed" tabindex="-1" aria-labelledby="popupMovieDetailed" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content bg-light text-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupMovieDetailedTitle"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <img id="popupMovieDetailedImage" class="img-thumbnail">
+                    </div>
+                    <div class="mb-3">
+                        <p class="fst-italic" id="popupMovieDetailedOverview"></p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a id="popupMovieDetailedLink" type="button" class="btn btn-primary">Fiche complète</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% block javascripts %}
+<script>
+    const modalFilmPopup = document.getElementById('popupMovieDetailed');
+
+    modalFilmPopup.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+
+        let dataTitle = button.getAttribute('data-bs-title');
+        let dataImage = button.getAttribute('data-bs-image');
+        let dataOverview = button.getAttribute('data-bs-overview');
+        let dataLink = button.getAttribute('data-bs-link');
+
+        let modalTitle = document.getElementById('popupMovieDetailedTitle');
+        let modalImage = document.getElementById('popupMovieDetailedImage');
+        let modalOverview = document.getElementById('popupMovieDetailedOverview');
+        let modalId = document.getElementById('popupMovieDetailedLink');
+
+        modalTitle.textContent = dataTitle;
+        modalOverview.textContent = dataOverview;
+
+        modalImage.setAttribute("alt", dataTitle);
+        modalImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + dataImage);
+
+        modalId.setAttribute("href", dataLink);
+    })
+</script>
+{% endblock %}
