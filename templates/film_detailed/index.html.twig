@@ -2,9 +2,9 @@
 
 {% block title %}Fiche {{movie.original_title|u.truncate(10)}}{% endblock %}
 
-{% block body %}
+{% block main %}
 
-<main class="container my-2">
+<div class="container">
 
     <div class="row">
         <h3 class="col-12 text-center fw-bold">{{movie.original_title}}</h3>
@@ -47,6 +47,6 @@
         </div>
     </div>
 
-</main>
+</div>
 
 {% endblock %}

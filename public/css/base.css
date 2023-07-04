@@ -1,4 +1,9 @@
+body{
+    font-family: "BioRhyme", serif;
+}
+
 header {
     height: 10vh;
     max-height: 250px;
 }
+
