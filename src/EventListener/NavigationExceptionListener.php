@@ -27,7 +27,8 @@ class NavigationExceptionListener
 
         $contentPage = $this->twig->render('exception/errorException.html.twig', [
             'codeError' => $codeError,
-            'message' => 'Page non trouvée, vérifiée votre saisie'
+            'message' => 'Page non trouvée, vérifiée votre saisie',
+            'messageOriginal' => $exception->getMessage(),
         ]);
 
         $event->setResponse((new Response())->setContent($contentPage));
