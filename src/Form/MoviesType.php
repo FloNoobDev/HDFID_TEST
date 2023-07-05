@@ -27,10 +27,10 @@ class MoviesType extends AbstractType
             ->add('language', ChoiceType::class, [
                 'required' => true,
                 'choices' => [
-                    'English US' => 'en-US',
                     'Français' => 'fr-FR',
+                    'English US' => 'en-US',
                 ],
-                'data' => 'en-US'
+                'data' => 'fr-FR'
             ])
 
             ->add('submit', SubmitType::class)
