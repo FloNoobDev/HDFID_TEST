@@ -20,43 +20,49 @@
 
         <section>
 
-            <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
-                <div class="col">
-                    <h3 class="text-center">Les films</h3>
+            <div class="row row-cols-1 justify-content-center">
+                <div class="col-12">
+                    {% if clearSessionForm %}
+                    <h3 class="text-center">Résultats
+                        <span class="ps-1">
+                            {{form_start(clearSessionForm)}}
+                            {{form_row(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'btn btn-secondary
+                            rounded'}})}}
+                            {{form_end(clearSessionForm)}}
+                        </span>
+                    </h3>
+                    {% else %}
+                    <h3 class="text-center">Films populaires</h3>
+                    {% endif %}
                 </div>
-                {% if clearSessionForm %}
-                <div class="col-4">
-                        {{form_start(clearSessionForm)}}
-                            {{form_row(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'btn btn-secondary rounded'}})}}
-                        {{form_end(clearSessionForm)}}
-                    </div>
-                {% endif %}
             </div>
 
             <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
                 {% if movies.results|length > 0 %}
                 {% for movie in movies.results %}
-                
-                    <a class="bg-color-one col-6 col-lg-4 border border-dark rounded m-1 h-50 text-decoration-none" data-bs-toggle="modal" data-bs-target="#popupMovieDetailed" data-bs-title="{{movie.title}}"
-                        data-bs-image={{movie.poster_path}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}" data-bs-overview="{{movie.overview}}" > 
 
-                        <div class="p-1 text-center border-bottom border-secondary rounded">
-                            <h5 class="text-color-three">{{movie.original_title}}</h5>
-                        </div>
+                <a class="bg-color-one col-6 col-lg-4 border border-dark rounded m-1 h-50 text-decoration-none"
+                    data-bs-toggle="modal" data-bs-target="#popupMovieDetailed" data-bs-title="{{movie.title}}"
+                    data-bs-image={{movie.poster_path}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}"
+                    data-bs-overview="{{movie.overview}}">
 
-                        <div class="p-1 text-center">
-                            {% if movie.poster_path != "" %}
-                            <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ movie.poster_path}}
-                                alt="{{'Image de ' ~ movie.title}}">
-                            {% else %}
-                            <p class="position-relative">{{movie.overview|capitalize|u.truncate(70,'...',false)}}<img
-                                    class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
-                                    alt="placeholderWhite.jpg"><i
-                                    class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
-                            </p>
-                            {% endif %}
-                        </div>
-                    </a>
+                    <div class="p-1 text-center border-bottom border-secondary rounded">
+                        <h5 class="text-color-three">{{movie.original_title}}</h5>
+                    </div>
+
+                    <div class="p-1 text-center">
+                        {% if movie.poster_path != "" %}
+                        <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ movie.poster_path}}
+                            alt="{{'Image de ' ~ movie.title}}">
+                        {% else %}
+                        <p class="position-relative">{{movie.overview|capitalize|u.truncate(70,'...',false)}}<img
+                                class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
+                                alt="placeholderWhite.jpg"><i
+                                class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+                        </p>
+                        {% endif %}
+                    </div>
+                </a>
                 {% endfor %}
                 {% else %}
                 <p class="text-center fst-italic">Aucun résultat à afficher</p>
@@ -65,20 +71,20 @@
         </section>
     </div>
 
-{% endblock %}
+    {% endblock %}
 
-{% block javascripts %}
-<script src="{{asset('/js/loadingAnimation.js')}}"></script>
-<script>
-    let btnSeekMoviesCancel = document.getElementById('movies_cancel');
-    let moviesSection = document.querySelector('section');
+    {% block javascripts %}
+    <script src="{{asset('/js/loadingAnimation.js')}}"></script>
+    <script>
+        let btnSeekMoviesCancel = document.getElementById('movies_cancel');
+        let moviesSection = document.querySelector('section');
 
-    btnSeekMoviesCancel.setAttribute('onclick', "HideAndShowMainSection()")
-    btnSeekMoviesCancel.setAttribute('data-bs-dismiss', "modal");
-    btnSeekMoviesCancel.setAttribute('aria-label', "Close");
+        btnSeekMoviesCancel.setAttribute('onclick', "HideAndShowMainSection()")
+        btnSeekMoviesCancel.setAttribute('data-bs-dismiss', "modal");
+        btnSeekMoviesCancel.setAttribute('aria-label', "Close");
 
-    function HideAndShowMainSection() {
-        moviesSection.classList.toggle('d-none');
-    }
-</script>
-{% endblock %}
+        function HideAndShowMainSection() {
+            moviesSection.classList.toggle('d-none');
+        }
+    </script>
+    {% endblock %}
