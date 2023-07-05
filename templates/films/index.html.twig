@@ -37,11 +37,11 @@
                 </div>
             </div>
 
-            <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
+            <div class="row row-cols-1 row-cols-lg-4 justify-content-between">
                 {% if movies.results|length > 0 %}
                 {% for movie in movies.results %}
 
-                <a class="bg-color-one col-6 col-lg-4 border border-dark rounded m-1 h-50 text-decoration-none"
+                <a class="bg-color-one col-6 col-lg-3 border border-dark rounded h-50 text-decoration-none m-1"
                     data-bs-toggle="modal" data-bs-target="#popupMovieDetailed" data-bs-title="{{movie.title}}"
                     data-bs-image={{movie.poster_path}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}"
                     data-bs-overview="{{movie.overview}}">
