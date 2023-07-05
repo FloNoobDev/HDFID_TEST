@@ -63,18 +63,21 @@ class FilmsController extends AbstractController
         $clearSessionForm->handleRequest($request);
 
         $moviesForm = $this->createForm(MoviesType::class);
-        $movies = $this->GetPopularMovies();
-
+        
         $moviesForm->handleRequest($request);
-
+        
         $session = $this->requestStack->getSession();
-
+        
         if ($clearSessionForm->isSubmitted() && $clearSessionForm->isValid()) {
             $session->clear();
         }
-
+        
         if ($session->get('title')) {
             $movies = $this->GetResultsByName($session->get('title'), $session->get('language'));
+        }
+        else{
+            $movies = $this->GetPopularMovies();
+            $clearSessionForm=null;
         }
 
         if ($moviesForm->isSubmitted() && $moviesForm->isValid()) {
@@ -88,11 +91,14 @@ class FilmsController extends AbstractController
             $session->set('language', $formData['language']);
 
             $movies = $this->GetResultsByName($formData['title'], $formData['language']);
+
+            $clearSessionForm = $this->createForm(ClearSessionType::class);
+            $clearSessionForm->handleRequest($request);
         }
 
         return $this->render('films/index.html.twig', [
             'moviesForm' => $moviesForm->createView(),
-            'clearSessionForm' => $clearSessionForm->createView(),
+            'clearSessionForm' => $clearSessionForm?$clearSessionForm->createView():null,
             'movies' => $movies,
         ]);
     }

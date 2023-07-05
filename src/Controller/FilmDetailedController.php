@@ -6,18 +6,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 
 class FilmDetailedController extends AbstractController
 {
     public function __construct(
         private HttpClientInterface $client,
+        private RequestStack $requestStack,
     ) {
     }
-    
-    public function GetResultForId(int $seekId)
+
+    public function GetResultForId(int $seekId, string|null $language)
     {
-        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?';
+        if($language){
+            $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?' . $language;
+        }
+        else{
+            $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?';
+        }
 
         $response = $this->client->request(
             'GET',
@@ -38,8 +45,10 @@ class FilmDetailedController extends AbstractController
     #[Route('/film/{vid}', name: 'film')]
     public function index(int $vid): Response
     {
-        $movie = $this->GetResultForId($vid);
-        // dd($movie);
+        $session = $this->requestStack->getSession();
+        $language = $session->get('language') ? '&language='. $session->get('language') : null;
+
+        $movie = $this->GetResultForId($vid,$language);
 
         return $this->render('film_detailed/index.html.twig', [
             'movie' => $movie,

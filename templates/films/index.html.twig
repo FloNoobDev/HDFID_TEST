@@ -21,16 +21,16 @@
         <section>
 
             <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
-                <div class="col-4">
+                <div class="col">
                     <h3 class="text-center">Les films</h3>
                 </div>
+                {% if clearSessionForm %}
                 <div class="col-4">
-                    {% if clearSessionForm %}
                         {{form_start(clearSessionForm)}}
-                            {{form_row(clearSessionForm.clear,{'attr': {'class':'btn btn-secondary rounded'}})}}
+                            {{form_row(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'btn btn-secondary rounded'}})}}
                         {{form_end(clearSessionForm)}}
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="row row-cols-1 row-cols-lg-3 justify-content-center">
