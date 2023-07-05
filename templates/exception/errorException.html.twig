@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Code {{codeError}}{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row row-cols-1 justify-content-center">
+        <h2 class="col text-center">
+            Code erreur : {{codeError}}
+        </h2>
+        <p class="col text-center fst-italic">
+            {{message}}
+        </p>
+        <a href="{{ path('films') }}" class="btn btn-dark">Accueil</a>
+    </div>
+</div>
+{% endblock %}

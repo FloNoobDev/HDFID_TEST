@@ -2,54 +2,34 @@
 
 namespace App\EventListener;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Twig\Environment;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
-class NavigationExceptionListener {
+class NavigationExceptionListener
+{
 
-    public function __invoke(ExceptionEvent $event): void
+    public function __construct(
+        private Environment $twig
+    ) {
+    }
+
+    public function onKernelException(ExceptionEvent $event)
     {
         $exception = $event->getThrowable();
-        $response = new Response();
-            
-        if ($exception instanceof HttpExceptionInterface) {
-            $response->setStatusCode($exception->getStatusCode());
-            $response->headers->replace($exception->getHeaders());
 
-            $message = sprintf(
-                "<body>
-                    <main class='container row-cols-1 justify-content-center'>
-                    <h2>Message d'erreur</h2>
-                    <p>%s</p>
-        
-                    <h3>Code d'erreur</h3>
-                    <p>". $exception->getStatusCode()."</p>
-                    </main>
-                </body>",
-
-                $exception->getMessage()
-            );
+        if (!$exception instanceof NotFoundHttpException) {
+            return;
         } else {
-            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            $message = sprintf(
-                "<body>
-                    <main class='container row-cols-1 justify-content-center'>
-                    <h2>Message d'erreur</h2>
-                    <p>%s</p>
-        
-                    <h3>Code d'erreur</h3>
-                    <p>%s</p>
-                    </main>
-                </body>",
-
-                $exception->getMessage(),
-                $exception->getCode()
-            );
+            $codeError = $exception->getStatusCode();
         }
-        
-        $response->setContent($message);
 
-        $event->setResponse($response);
+        $contentPage = $this->twig->render('exception/errorException.html.twig', [
+            'codeError' => $codeError,
+            'message' => 'Page non trouvée, vérifiée votre saisie'
+        ]);
+
+        $event->setResponse((new Response())->setContent($contentPage));
     }
 }
