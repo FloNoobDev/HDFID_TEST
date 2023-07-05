@@ -23,7 +23,7 @@ class FilmDetailedController extends AbstractController
             $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?' . $language;
         }
         else{
-            $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?';
+            $urlToSeek = $this->getParameter('tmdbMainUrl') . '/movie/' . $seekId . '?&language=fr-FR' ;
         }
 
         $response = $this->client->request(
