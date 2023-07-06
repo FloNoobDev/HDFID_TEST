@@ -7,14 +7,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                        <img id="popupMovieDetailedImage" class="img-thumbnail">
-                    </div>
-                    <div class="mb-3">
-                        <p class="fst-italic" id="popupMovieDetailedOverview"></p>
-                    </div>
-                </form>
+                <div class="mb-3">
+                    <img id="popupMovieDetailedImage" class="img-thumbnail">
+                </div>
+                <div class="mb-3">
+                    <p class="fst-italic" id="popupMovieDetailedOverview"></p>
+                </div>
             </div>
             <div class="modal-footer">
                 <a id="popupMovieDetailedLink" type="button" class="btn btn-primary">Fiche complète</a>
@@ -45,7 +43,13 @@
         modalOverview.textContent = dataOverview;
 
         modalImage.setAttribute("alt", dataTitle);
-        modalImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + dataImage);
+
+        if(dataImage !='*'){
+            modalImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + dataImage);
+        }
+        else{
+            modalImage.parentNode.removeChild(modalImage);
+        }
 
         modalId.setAttribute("href", dataLink);
     })

@@ -7,6 +7,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -28,6 +29,7 @@ class GlobalEventSubscriber implements EventSubscriberInterface
             KernelEvents::FINISH_REQUEST => ['onFinishRequestEvent'],
             KernelEvents::RESPONSE => ['onResponseEvent'],
             KernelEvents::VIEW => ['onViewEvent'],
+            KernelEvents::EXCEPTION=>['onExceptionEvent'],
         ];
     }
 
@@ -49,5 +51,8 @@ class GlobalEventSubscriber implements EventSubscriberInterface
     }
     public function onViewEvent(ViewEvent $evt)
     {
+    }
+    public function onExceptionEvent(ExceptionEvent $evt){
+        $this->loggerInterface->log('ERROR',$evt->getRequest());
     }
 }

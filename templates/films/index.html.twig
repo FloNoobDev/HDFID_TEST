@@ -20,30 +20,33 @@
 
         <section>
 
-            <div class="row row-cols-1 justify-content-center">
-                <div class="col-12">
-                    {% if clearSessionForm %}
-                    <h3 class="text-center">Résultats
-                        <span class="ps-1">
-                            {{form_start(clearSessionForm)}}
-                            {{form_row(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'btn btn-secondary
-                            rounded'}})}}
-                            {{form_end(clearSessionForm)}}
-                        </span>
+            {% if clearSessionForm %}
+            <div class="row row-cols-2 border-bottom border-3 rounded">
+                <div class="col-6 align-self-end">
+                    <h3 class="text-end">Résultats
                     </h3>
-                    {% else %}
-                    <h3 class="text-center">Films populaires</h3>
-                    {% endif %}
+                </div>
+                <div class="col-6 align-self-start">
+                    {{form_start(clearSessionForm)}}
+                    {{form_widget(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'text-start btn btn-secondary rounded'}})}}
+                    {{form_end(clearSessionForm)}}
                 </div>
             </div>
+            {% else %}
+            <div class="row row-cols-1 justify-content-center border-bottom border-3 rounded">
+                <div class="col-12">
+                    <h3 class="text-center">Films populaires</h3>
+                </div>
+            </div>
+            {% endif %}
 
-            <div class="row row-cols-1 row-cols-lg-4 justify-content-center justify-content-lg-between">
+            <div class="row row-cols-1 row-cols-lg-4 justify-content-center justify-content-lg-between pt-1">
                 {% if movies.results|length > 0 %}
                 {% for movie in movies.results %}
 
                 <a class="bg-color-one col-6 col-lg-3 border border-dark rounded h-50 text-decoration-none m-1"
                     data-bs-toggle="modal" data-bs-target="#popupMovieDetailed" data-bs-title="{{movie.title}}"
-                    data-bs-image={{movie.poster_path}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}"
+                    data-bs-image={{movie.poster_path ? movie.poster_path  : '*'}} data-bs-link="{{ path('film',{ 'vid': movie.id} ) }}"
                     data-bs-overview="{{movie.overview}}">
 
                     <div class="p-1 text-center border-bottom border-secondary rounded">
@@ -55,10 +58,10 @@
                         <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ movie.poster_path}}
                             alt="{{'Image de ' ~ movie.title}}">
                         {% else %}
-                        <p class="position-relative">{{movie.overview|capitalize|u.truncate(70,'...',false)}}<img
+                        <p class="position-relative text-light">{{movie.overview|capitalize|u.truncate(70,'..',false)}}<img
                                 class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
                                 alt="placeholderWhite.jpg"><i
-                                class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+                                class="text-dark bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
                         </p>
                         {% endif %}
                     </div>
