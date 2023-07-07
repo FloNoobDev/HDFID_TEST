@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use App\Form\PeopleType;
 use App\Form\ClearSessionType;
 use App\CustomClass\GenericClass;
@@ -11,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PeopleController extends GenericClass
 {
+    #[Cache(expires: 'tomorrow', public: true)]
     #[Route('/people', name: 'people')]
     public function index(Request $request): Response
     {

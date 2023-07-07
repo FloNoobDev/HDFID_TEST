@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use App\CustomClass\GenericClass;
 use App\Form\MoviesType;
 use App\Form\ClearSessionType;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FilmsController extends GenericClass
 {
+    #[Cache(expires: 'tomorrow', public: true)]
     #[Route('/films', name: 'films')]
     public function index(Request $request): Response
     {

@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpKernel\Attribute\Cache;
 use App\CustomClass\GenericClass;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PersonController extends GenericClass
 {
+    #[Cache(expires: 'tomorrow', public: true)]
     #[Route('/person/{vid}', name: 'person')]
     public function index(int $vid): Response
     {
