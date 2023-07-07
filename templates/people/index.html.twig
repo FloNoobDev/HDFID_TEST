@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}People{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/loadingAnimation.css') }}">
+{% endblock %}
+
+{% block main %}
+
+<div class="">
+
+    <div id="loader"></div>
+
+    <div class="container d-none" id="mainDiv">
+
+        {% include "_popup/popupPeopleForm.html.twig" %}
+        {% include "_popup/popupPerson.html.twig" %}
+
+        <section>
+
+            {% if clearSessionForm %}
+            <div class="row row-cols-2 border-bottom border-3 rounded">
+                <div class="col-6 align-self-end">
+                    <h3 class="text-end">Résultats
+                    </h3>
+                </div>
+                <div class="col-6 align-self-start">
+                    {{form_start(clearSessionForm)}}
+                    {{form_widget(clearSessionForm.clear,{'label':'RAZ','attr': {'class':'text-start btn btn-secondary rounded'}})}}
+                    {{form_end(clearSessionForm)}}
+                </div>
+            </div>
+            {% else %}
+            <div class="row row-cols-1 justify-content-center border-bottom border-3 rounded">
+                <div class="col-12">
+                    <h3 class="text-center">Personnes populaires</h3>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="row row-cols-1 row-cols-lg-4 justify-content-center justify-content-lg-between pt-1">
+                {% if people.results|length > 0 %}
+                {% for person in people.results %}
+{% if person.profile_path %}
+
+<a class="bg-color-one col-6 col-lg-3 border border-dark rounded h-50 text-decoration-none m-1"
+data-bs-toggle="modal" data-bs-target="#popupPerson" data-bs-title="{{person.original_name}}"
+data-bs-image={{person.profile_path ? person.profile_path  : '*'}} data-bs-link="{{ path('person',{ 'vid': person.id} ) }}"
+data-bs-department="{{person.known_for_department}}">
+
+<div class="p-1 text-center border-bottom border-secondary rounded">
+    <h5 class="text-color-three">{{person.original_name}}</h5>
+</div>
+
+<div class="p-1 text-center">
+    {% if person.profile_path != "" %}
+    <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}}
+    alt="{{'Image de ' ~ person.original_name}}">
+    {% else %}
+    <p class="position-relative text-light"><img
+        class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
+        alt="placeholderWhite.jpg"><i
+        class="text-dark bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+    </p>
+    {% endif %}
+</div>
+</a>
+{% endif %}
+{% endfor %}
+                {% else %}
+                <p class="text-center fst-italic">Aucun résultat à afficher</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+
+    {% endblock %}
+
+    {% block javascripts %}
+    <script src="{{asset('/js/loadingAnimation.js')}}"></script>
+    <script src="{{asset('/js/fadeAnimation.js')}}"></script>
+    <script>
+        let btnSeekPeopleCancel = document.getElementById('people_cancel');
+        let peopleSection = document.querySelector('section');
+
+        btnSeekPeopleCancel.setAttribute('onclick', "HideAndShowMainSection()")
+        btnSeekPeopleCancel.setAttribute('data-bs-dismiss', "modal");
+        btnSeekPeopleCancel.setAttribute('aria-label', "Close");
+
+        function HideAndShowMainSection() {
+            peopleSection.classList.toggle('d-none');
+        }
+    </script>
+    {% endblock %}

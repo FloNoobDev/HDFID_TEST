@@ -13,7 +13,7 @@ class FilmDetailedController extends GenericClass
     public function index(int $vid): Response
     {
         $session = $this->requestStack->getSession();
-        $language = $session->get('language') ? '&language='. $session->get('language') : null;
+        $language = $session->get('languageMovie') ? '&language='. $session->get('languageMovie') : null;
 
         $movie = $this->GetResultForId($vid,$language);
 

@@ -2,25 +2,23 @@
 
 namespace App\Controller;
 
-use App\CustomClass\GenericClass;
-use App\Form\MoviesType;
+use App\Form\PeopleType;
 use App\Form\ClearSessionType;
+use App\CustomClass\GenericClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-class FilmsController extends GenericClass
+class PeopleController extends GenericClass
 {
-    #[Route('/films', name: 'films')]
+    #[Route('/people', name: 'people')]
     public function index(Request $request): Response
     {
         $clearSessionForm = $this->createForm(ClearSessionType::class);
         $clearSessionForm->handleRequest($request);
 
-        $moviesForm = $this->createForm(MoviesType::class);
-        
-        $moviesForm->handleRequest($request);
+        $peopleForm = $this->createForm(PeopleType::class);        
+        $peopleForm->handleRequest($request);
         
         $session = $this->requestStack->getSession();
         
@@ -28,34 +26,34 @@ class FilmsController extends GenericClass
             $session->clear();
         }
         
-        if ($session->get('title')) {
-            $movies = $this->GetResultsByName($session->get('title'), $session->get('languageMovie'));
+        if ($session->get('name')) {
+            $people = $this->GetPeopleByName($session->get('name'), $session->get('languagePeople'));
         }
         else{
-            $movies = $this->GetPopularMovies();
+            $people = $this->GetPopularPeople();
             $clearSessionForm=null;
         }
 
-        if ($moviesForm->isSubmitted() && $moviesForm->isValid()) {
-            $formData = $moviesForm->getData();
+        if ($peopleForm->isSubmitted() && $peopleForm->isValid()) {
+            $formData = $peopleForm->getData();
 
             if ($formData['honeypot']) {
-                $this->redirectToRoute('index');
+                return $this->redirectToRoute('index');
             }
 
-            $session->set('title', $formData['title']);
-            $session->set('languageMovie', $formData['language']);
+            $session->set('name', $formData['name']);
+            $session->set('languagePeople', $formData['language']);
 
-            $movies = $this->GetResultsByName($formData['title'], $formData['language']);
+            $people = $this->GetPeopleByName($formData['name'], $formData['language']);
 
             $clearSessionForm = $this->createForm(ClearSessionType::class);
             $clearSessionForm->handleRequest($request);
         }
 
-        return $this->render('films/index.html.twig', [
-            'moviesForm' => $moviesForm->createView(),
+        return $this->render('people/index.html.twig', [
+            'peopleForm' => $peopleForm->createView(),
             'clearSessionForm' => $clearSessionForm?$clearSessionForm->createView():null,
-            'movies' => $movies,
+            'people' => $people,
         ]);
     }
 }

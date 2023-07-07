@@ -1,24 +1,24 @@
-<div class="modal fade" id="popupMoviesForm" tabindex="-1" aria-labelledby="popupMoviesForm" aria-hidden="true">
+<div class="modal fade" id="popupPeopleForm" tabindex="-1" aria-labelledby="popupPeopleForm" aria-hidden="true">
 
-    {{form_start(moviesForm)}}
+    {{form_start(peopleForm)}}
 
     <div class="modal-dialog">
         <div class="modal-content bg-light text-dark">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="popupMoviesForm">Nouvelle recherche</h1>
+                <h1 class="modal-title fs-5" id="popupPeopleForm">Nouvelle recherche</h1>
             </div>
             <div class="modal-body">
-                {{ form_row(moviesForm.title,{'label':'Titre original du film'}) }}
-                {{ form_row(moviesForm.language,{'label':'Langue du titre'}) }}
+                {{ form_row(peopleForm.name,{'label':'Nom ou Prénom'}) }}
+                {{ form_row(peopleForm.language,{'label':'Langue de recherche'}) }}
             </div>
             <div class="modal-footer">
-                {{ form_row(moviesForm.submit,{'label':'Rechercher', 'attr':{'class':'btn-primary'}}) }}
-                {{ form_row(moviesForm.cancel,{'label':'Annuler', 'attr':{'class':'btn-outline-dark'}}) }}
+                {{ form_row(peopleForm.submit,{'label':'Rechercher', 'attr':{'class':'btn-primary'}}) }}
+                {{ form_row(peopleForm.cancel,{'label':'Annuler', 'attr':{'class':'btn-outline-dark'}}) }}
             </div>
         </div>
     </div>
 
-    {{form_end(moviesForm)}}
+    {{form_end(peopleForm)}}
 
 </div>
 
@@ -26,7 +26,7 @@
 {% block javascripts %}
 <script>
     let allInputFields = document.querySelectorAll('input');
-    let dropdownMenu = document.getElementById('movies_language');
+    let dropdownMenu = document.getElementById('people_language');
 
     if (allInputFields) {
         allInputFields.forEach((vInput) => {

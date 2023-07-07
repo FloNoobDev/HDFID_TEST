@@ -1,7 +1,7 @@
 <header class="mb-2">
   <nav class="navbar fixed-top navbar-expand-lg bg-color-four" >
     <div class="container-fluid text-light">
-      <a class="fs-2 navbar-brand" href="{{path('films')}}"><i class="bi bi-film pe-1"></i>IMDB-Like</a>
+      <a class="fs-2 navbar-brand" href="{{path('index')}}"><i class="bi bi-film pe-1"></i>IMDB-Like</a>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,13 +11,26 @@
       <div class="collapse navbar-collapse my-2 my-lg-auto" id="navbarNav">
         <ul class="navbar-nav">
 
-          {% if app.request.pathinfo|slice(1)|lower == '' %}
           <li class="nav-item align-self-end align-md-auto">
-            <a class="fs-2 nav-link btn" onclick="HideAndShowMainSection()" id="btnSeekMovies" 
-              data-bs-toggle="modal" data-bs-target="#popupMoviesForm"><i class="bi bi-search pe-1"></i>Recherche</a>
+            <a class="fs-2 nav-link btn" href="{{path('films')}}"><i class="bi bi-camera-reels-fill pe-1"></i>Films</a>
+          </li>
+          {% if app.request.pathinfo|slice(1)|lower == 'films' %}
+          <li class="nav-item align-self-end align-md-auto">
+            <a class="fs-3 nav-link btn" onclick="HideAndShowMainSection()" id="btnSeekMovies" 
+              data-bs-toggle="modal" data-bs-target="#popupMoviesForm"><i class="bi bi-search pe-1"></i>Trouver des films</a>
           </li>
           {% endif %}
 
+
+          <li class="nav-item align-self-end align-md-auto">
+            <a class="fs-2 nav-link btn" href="{{path('people')}}"><i class="bi bi-person-bounding-box pe-1"></i>People</a>
+          </li>
+          {% if app.request.pathinfo|slice(1)|lower == 'people' %}
+          <li class="nav-item align-self-end align-md-auto">
+            <a class="fs-3 nav-link btn" onclick="HideAndShowMainSection()" id="btnSeekPeople" 
+              data-bs-toggle="modal" data-bs-target="#popupPeopleForm"><i class="bi bi-search pe-1"></i>Trouver des gens</a>
+          </li>
+          {% endif %}
         </ul>
 
       </div>

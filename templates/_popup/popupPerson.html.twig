@@ -1,0 +1,57 @@
+<div class="modal fade" id="popupPerson" tabindex="-1" aria-labelledby="popupPerson" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content bg-light text-dark">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupPersonTitle"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <img id="popupPersonImage" class="img-thumbnail">
+                </div>
+                <div class="mb-3">
+                    <p class="fst-italic" id="popupPersonDepartment"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="popupPersonLink" type="button" class="btn btn-primary">Fiche complète</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% block javascripts %}
+<script>
+    const modalPopup = document.getElementById('popupPerson');
+
+    modalPopup.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+
+        let dataTitle = button.getAttribute('data-bs-title');
+        let dataImage = button.getAttribute('data-bs-image');
+        let dataDepartment = button.getAttribute('data-bs-department');
+        let dataLink = button.getAttribute('data-bs-link');
+
+        let modalTitle = document.getElementById('popupPersonTitle');
+        let modalImage = document.getElementById('popupPersonImage');
+        let modalDepartment = document.getElementById('popupPersonDepartment');
+        let modalId = document.getElementById('popupPersonLink');
+
+        modalTitle.textContent = dataTitle;
+        modalDepartment.textContent = dataDepartment;
+
+        modalImage.setAttribute("alt", dataTitle);
+
+        if(dataImage !='*'){
+            modalImage.setAttribute("src", "https://image.tmdb.org/t/p/original" + dataImage);
+        }
+        else{
+            modalImage.parentNode.removeChild(modalImage);
+        }
+
+        modalId.setAttribute("href", dataLink);
+    })
+</script>
+{% endblock %}

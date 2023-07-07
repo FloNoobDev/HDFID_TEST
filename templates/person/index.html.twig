@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche {{person.name}}{% endblock %}
+
+{% block main %}
+
+<div class="container">
+
+    <div class="row">
+        <h3 class="col-12 text-center fw-bold border-bottom border-3 rounded pb-2">{{person.name}}</h3>
+    </div>
+
+    <div class="row row-cols-1 row-cols-lg-2 pt-1">
+        <div class="col">
+            {% if person.profile_path != "" %}
+            <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}} alt="{{'Image de ' ~ person.name}}">
+            {% else %}
+            <p class="position-relative">Pas d'illustration <i
+                    class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+            </p>
+            {% endif %}
+        </div>
+        <div class="col">
+            <div class="row row-cols-1">
+                <div class="col pt-1"><h4 class="text-decoration-underline">Ses infos :</h4></div>
+                <div class="col pt-1"><p>Né le : {{person.birthday}}</p></div>
+                <div class="col pt-1"><p>Né à : {{person.place_of_birth}}</p></div>
+                <div class="col pt-1"><p>Popularité : {{person.popularity}}%</p></div>
+                {% if imdb %}
+                <div class="col pt-1">Page IMDb : <a href="{{imdb}}" class="text-decoration-none text-secondary fs-3"><i class="bi bi-browser-chrome"></i></a></div>
+                {% endif %}
+                {% if facebook %}
+                <div class="col pt-1">Page Facebook : <a href="{{facebook}}" class="text-decoration-none text-secondary fs-3"><i class="bi bi-facebook"></i></a></div>
+                {% endif %}
+                
+                
+                <div class="col border-top border-1 rounded"></div>
+
+                <div class="col pt-1"><h4 class="text-decoration-underline">Sa bio :</h4></div>
+                <div class="col pt-1"><p class="fst-italic">{% if person.biography %} {{person.biography}} {% else %}Non renseignée{% endif %}</p></div>
+
+                <div class="py-1 col-12 text-end">
+                    <a class="btn btn-outline-dark fw-bold" href="{{path('people')}}">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

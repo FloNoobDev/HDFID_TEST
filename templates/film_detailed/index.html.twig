@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Fiche {{movie.original_title|u.truncate(10)}}{% endblock %}
+{% block title %}Fiche {{movie.original_title|u.truncate(15)}}{% endblock %}
 
 {% block main %}
 
@@ -22,9 +22,9 @@
         </div>
         <div class="col">
             <div class="row row-cols-1">
-                <div class="col pt-1">Sortie le : {{movie.release_date}}</div>
-                <div class="col pt-1">Langue originale : {{movie.original_language}}</div>
-                <div class="col pt-1">{{movie.overview}}</div>
+                <div class="col pt-1"><p>Sortie le : {{movie.release_date}}</p></div>
+                <div class="col pt-1"><p>Langue originale : {{movie.original_language}}</p></div>
+                <div class="col pt-1"><p>{{movie.overview}}</p></div>
 
                 <p class="col pt-1 fst-italic">Catégorie :
                         {% for genre in movie.genres %}
