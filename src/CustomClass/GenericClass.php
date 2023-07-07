@@ -120,18 +120,34 @@ class GenericClass extends AbstractController
 
         return $jsonRaw;
     }
-public function GetSocialMediaById(int $seekId){
-    $urlToSeek = $this->getParameter('tmdbMainUrl') . '/person/' . $seekId . '/external_ids';
+    public function GetSocialMediaById(int $seekId)
+    {
+        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/person/' . $seekId . '/external_ids';
 
-    $response = $this->client->request('GET', $urlToSeek, [
-        'headers' => [
-            'Authorization' => $this->getParameter('tmdbAccessKey'),
-            'accept' => 'application/json',
-        ],
-      ]);
+        $response = $this->client->request('GET', $urlToSeek, [
+            'headers' => [
+                'Authorization' => $this->getParameter('tmdbAccessKey'),
+                'accept' => 'application/json',
+            ],
+        ]);
 
-      $jsonRaw = json_decode($response->getContent(), true);
+        $jsonRaw = json_decode($response->getContent(), true);
 
-      return $jsonRaw;
-}
+        return $jsonRaw;
+    }
+    public function GetMoviesForPerson($seekId){
+
+        $urlToSeek = $this->getParameter('tmdbMainUrl') . '/person/' . $seekId . '/movie_credits?language=fr-FR';
+
+        $response = $this->client->request('GET', $urlToSeek, [
+            'headers' => [
+                'Authorization' => $this->getParameter('tmdbAccessKey'),
+                'accept' => 'application/json',
+            ],
+        ]);
+
+        $jsonRaw = json_decode($response->getContent(), true);
+
+        return $jsonRaw;
+    }
 }

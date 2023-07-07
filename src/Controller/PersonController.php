@@ -12,11 +12,13 @@ class PersonController extends GenericClass
     public function index(int $vid): Response
     {
         $person = $this->GetPersonById($vid);
+        $personMovies = $this->GetMoviesForPerson($vid);
         $linkImdb = $this->GetSocialMediaById($vid)['imdb_id'] ? 'https://www.imdb.com/name/' . $this->GetSocialMediaById($vid)['imdb_id'] : null;
         $linkFacebook = $this->GetSocialMediaById($vid)['facebook_id']? 'https://www.facebook.com/' .$this->GetSocialMediaById($vid)['facebook_id'] : null;
 
         return $this->render('person/index.html.twig', [
             'person' => $person,
+            'movies'=>$personMovies,
             'imdb' => $linkImdb,
             'facebook' => $linkFacebook,
         ]);

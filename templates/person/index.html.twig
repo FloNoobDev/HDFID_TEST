@@ -13,7 +13,8 @@
     <div class="row row-cols-1 row-cols-lg-2 pt-1">
         <div class="col">
             {% if person.profile_path != "" %}
-            <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}} alt="{{'Image de ' ~ person.name}}">
+            <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}}
+                alt="{{'Image de ' ~ person.name}}">
             {% else %}
             <p class="position-relative">Pas d'illustration <i
                     class="bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
@@ -21,29 +22,116 @@
             {% endif %}
         </div>
         <div class="col">
-            <div class="row row-cols-1">
-                <div class="col pt-1"><h4 class="text-decoration-underline">Ses infos :</h4></div>
-                <div class="col pt-1"><p>Né le : {{person.birthday}}</p></div>
-                <div class="col pt-1"><p>Né à : {{person.place_of_birth}}</p></div>
-                <div class="col pt-1"><p>Popularité : {{person.popularity}}%</p></div>
+            <div class="row row-cols-1 justify-content-center">
+                <div class="col pt-1">
+                    <h4 class="text-decoration-underline">Ses infos :</h4>
+                </div>
+                <div class="col pt-1">
+                    <p>Né le : {{person.birthday}}</p>
+                </div>
+                <div class="col pt-1">
+                    <p>Né à : {{person.place_of_birth}}</p>
+                </div>
+                <div class="col pt-1">
+                    <p>Popularité : {{person.popularity}}%</p>
+                </div>
                 {% if imdb %}
-                <div class="col pt-1">Page IMDb : <a href="{{imdb}}" class="text-decoration-none text-secondary fs-3"><i class="bi bi-browser-chrome"></i></a></div>
+                <div class="col pt-1">Page IMDb : <a href="{{imdb}}" class="text-decoration-none text-secondary fs-3"><i
+                            class="bi bi-browser-chrome"></i></a></div>
                 {% endif %}
                 {% if facebook %}
-                <div class="col pt-1">Page Facebook : <a href="{{facebook}}" class="text-decoration-none text-secondary fs-3"><i class="bi bi-facebook"></i></a></div>
+                <div class="col pt-1">Page Facebook : <a href="{{facebook}}"
+                        class="text-decoration-none text-secondary fs-3"><i class="bi bi-facebook"></i></a></div>
                 {% endif %}
-                
-                
+
+
                 <div class="col border-top border-1 rounded"></div>
 
-                <div class="col pt-1"><h4 class="text-decoration-underline">Sa bio :</h4></div>
-                <div class="col pt-1"><p class="fst-italic">{% if person.biography %} {{person.biography}} {% else %}Non renseignée{% endif %}</p></div>
+                <div class="col pt-1">
+                    <h4 class="text-decoration-underline">Sa bio :</h4>
+                </div>
+                <div class="col pt-1">
+                    <p class="fst-italic">{% if person.biography %} {{person.biography}} {% else %}Non renseignée{%
+                        endif %}</p>
+                </div>
 
                 <div class="py-1 col-12 text-end">
                     <a class="btn btn-outline-dark fw-bold" href="{{path('people')}}">Retour</a>
                 </div>
+
+                <div class="col-10">
+                    <h3 class="text-center">Crédits</h3>
+                    <div class="row row-cols-1 row-cols-lg-2">
+                        {% if movies.cast|length > 0 %}                       
+                        <div class="col my-1">
+                            <h4 class="text-center">Acteur <span class="badge bg-dark">{{movies.cast|length}}</span></h4>
+                            <div id="carouselCast" class="carousel slide p-1" data-bs-ride="true">
+        
+                                <div class="carousel-inner">
+                                    {% for mov in movies.cast %}
+                                    <div class="carousel-item {{loop.first ? 'active' : ''}}">
+                                        <a href="{{path('film',{'vid': mov.id })}}">
+                                            <img src="{{ tmdbBaseUrlPicture ~ mov.poster_path}}" class="d-block img-thumbnail"
+                                            alt="{{ mov.title }}">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5 class=" rounded bg-light text-dark">{{mov.title}}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+        
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselCast"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselCast"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if movies.crew|length > 0 %}
+                        <div class="col my-1">
+                            <h4 class="text-center">Technique <span class="badge bg-dark">{{movies.crew|length}}</span></h4>
+                            <div id="carouselCrew" class="carousel slide p-1" data-bs-ride="true">
+        
+                                <div class="carousel-inner">
+                                    {% for mov in movies.cast %}
+                                    <div class="carousel-item {{loop.first ? 'active' : ''}}">
+                                        <a href="{{path('film',{'vid': mov.id })}}">
+                                            <img src="{{ tmdbBaseUrlPicture ~ mov.poster_path}}" class="d-block img-thumbnail"
+                                            alt="{{ mov.title }}">
+                                            <div class="carousel-caption d-none d-md-block">
+                                                <h5 class=" rounded bg-light text-dark">{{mov.title}}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+        
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselCrew"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselCrew"
+                                    data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                   
+                </div>
             </div>
         </div>
+
     </div>
 
 </div>

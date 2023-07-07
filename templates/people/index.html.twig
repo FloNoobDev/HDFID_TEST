@@ -41,33 +41,32 @@
 
             <div class="row row-cols-1 row-cols-lg-4 justify-content-center justify-content-lg-between pt-1">
                 {% if people.results|length > 0 %}
-                {% for person in people.results %}
-{% if person.profile_path %}
+                    {% for person in people.results %}
+                        {% if person.profile_path %}
 
-<a class="bg-color-one col-6 col-lg-3 border border-dark rounded h-50 text-decoration-none m-1"
-data-bs-toggle="modal" data-bs-target="#popupPerson" data-bs-title="{{person.original_name}}"
-data-bs-image={{person.profile_path ? person.profile_path  : '*'}} data-bs-link="{{ path('person',{ 'vid': person.id} ) }}"
-data-bs-department="{{person.known_for_department}}">
+                        <a class="bg-color-one col-6 col-lg-3 border border-dark rounded h-50 text-decoration-none m-1"
+                        data-bs-toggle="modal" data-bs-target="#popupPerson" data-bs-title="{{person.original_name}}"
+                        data-bs-image={{person.profile_path ? person.profile_path  : '*'}} data-bs-link="{{ path('person',{ 'vid': person.id} ) }}">
 
-<div class="p-1 text-center border-bottom border-secondary rounded">
-    <h5 class="text-color-three">{{person.original_name}}</h5>
-</div>
+                        <div class="p-1 text-center border-bottom border-secondary rounded">
+                            <h5 class="text-color-three">{{person.original_name}}</h5>
+                        </div>
 
-<div class="p-1 text-center">
-    {% if person.profile_path != "" %}
-    <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}}
-    alt="{{'Image de ' ~ person.original_name}}">
-    {% else %}
-    <p class="position-relative text-light"><img
-        class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
-        alt="placeholderWhite.jpg"><i
-        class="text-dark bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
-    </p>
-    {% endif %}
-</div>
-</a>
-{% endif %}
-{% endfor %}
+                        <div class="p-1 text-center">
+                            {% if person.profile_path != "" %}
+                            <img class="img-fluid" src={{ tmdbBaseUrlPicture ~ person.profile_path}}
+                            alt="{{'Image de ' ~ person.original_name}}">
+                            {% else %}
+                            <p class="position-relative text-light"><img
+                                class="img-fluid" src="{{asset('/image/placeholderWhite.jpg')}}"
+                                alt="placeholderWhite.jpg"><i
+                                class="text-dark bi bi-camera-video-off-fill fs-1 position-absolute top-50 start-50 translate-middle"></i>
+                            </p>
+                            {% endif %}
+                        </div>
+                        </a>
+                        {% endif %}
+                    {% endfor %}
                 {% else %}
                 <p class="text-center fst-italic">Aucun résultat à afficher</p>
                 {% endif %}

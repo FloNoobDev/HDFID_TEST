@@ -47,7 +47,8 @@
                 </div>
 
                 <div class="py-1 col-12 text-end">
-                    <a class="btn btn-outline-dark fw-bold" href="{{path('films')}}">Retour</a>
+                    {# <a class="btn btn-outline-dark fw-bold" href="{{path('films')}}" >Retour</a> #}
+                    <a class="btn btn-outline-dark fw-bold" href="{{app.request.headers.get('referer')}}" >Retour</a>
                 </div>
             </div>
         </div>
