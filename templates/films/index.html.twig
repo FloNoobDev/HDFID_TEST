@@ -8,12 +8,17 @@
 
 {% block main %}
 
+<div id="btn-seek">
+    <a class="fs-3 btn btn-dark rounded" onclick="HideAndShowMainSection()" id="btnSeekMovies" 
+    data-bs-toggle="modal" data-bs-target="#popupMoviesForm"><i class="bi bi-search pe-1"></i></a>
+</div>
+
 <div class="">
 
     <div id="loader"></div>
+    
 
     <div class="container d-none" id="mainDiv">
-
 
         {% include "_popup/popupMovieForm.html.twig" %}
         {% include "_popup/popupMovie.html.twig" %}

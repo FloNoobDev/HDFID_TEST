@@ -14,23 +14,11 @@
           <li class="nav-item align-self-end align-md-auto">
             <a class="fs-2 nav-link btn" href="{{path('films')}}"><i class="bi bi-camera-reels-fill pe-1"></i>Films</a>
           </li>
-          {% if app.request.pathinfo|slice(1)|lower == 'films' %}
-          <li class="nav-item align-self-end align-md-auto">
-            <a class="fs-3 nav-link btn" onclick="HideAndShowMainSection()" id="btnSeekMovies" 
-              data-bs-toggle="modal" data-bs-target="#popupMoviesForm"><i class="bi bi-search pe-1"></i>Trouver des films</a>
-          </li>
-          {% endif %}
-
 
           <li class="nav-item align-self-end align-md-auto">
-            <a class="fs-2 nav-link btn" href="{{path('people')}}"><i class="bi bi-person-bounding-box pe-1"></i>People</a>
+            <a class="fs-2 nav-link btn" href="{{path('people')}}"><i class="bi bi-person-bounding-box pe-1"></i>Personnes</a>
           </li>
-          {% if app.request.pathinfo|slice(1)|lower == 'people' %}
-          <li class="nav-item align-self-end align-md-auto">
-            <a class="fs-3 nav-link btn" onclick="HideAndShowMainSection()" id="btnSeekPeople" 
-              data-bs-toggle="modal" data-bs-target="#popupPeopleForm"><i class="bi bi-search pe-1"></i>Trouver des gens</a>
-          </li>
-          {% endif %}
+
         </ul>
 
       </div>

@@ -7,3 +7,10 @@ header {
     max-height: 250px;
 }
 
+#btn-seek{
+    position: sticky;
+    top : 9vh;
+}
+#btn-seek a{
+    margin-left: calc(90vw - 20px);   
+}
